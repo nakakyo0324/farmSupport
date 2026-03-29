@@ -1,1 +1,20 @@
-hogehoge
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div sec:authorize="isAuthenticated() and authentication.name != 'anonymousUser'">
+    こんにちは:<span sec:authentication="name"></span>さん
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="ログアウト" />
+    </form>
+</div>
+<div sec:authorize="!isAuthenticated() or authentication.name == 'anonymousUser'">
+    <form th:action="@{/login}" method="get">
+        <input type="submit" value="ログイン" />
+    </form>
+</div>
+</body>
+</html>

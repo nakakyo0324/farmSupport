@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../../static/css/common.css" type="text/css" />
+</head>
+<body class="main-container">
+<table th:object="${product}">
+    <td th:text="*{name}"></td>
+    <td th:text="*{price}"></td>
+    <td th:text="${product.getUserName()}"></td>
+    <td th:text="${quantity}"></td>
+</table>
+<a href="/order/confirm">カートを確認する</a>
+</body>
+</html>

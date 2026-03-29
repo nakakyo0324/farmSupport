@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../../static/css/common.css" type="text/css" />
+</head>
+<body class="main-container">
+<div th:if="${products.size()} == 0">カートは空です</div>
+<div th:if="${products.size()} > 0">
+    <div th:each="product : ${products}" th:object="${product}">
+        <table>
+            <tr>
+                <th>商品名</th>
+                <td th:text="*{name}"></td>
+            </tr>
+            <tr>
+                <th>価格</th>
+                <td th:text="*{price}"></td>
+            </tr>
+            <tr>
+                <th>個数</th>
+                <td th:text="*{quantity}"></td>
+            </tr>
+        </table>
+    </div>
+    <form th:action="@{/order/submit}" method="post">
+        <input type="submit" value="注文を確定する">
+    </form>
+</div>
+
+</body>
+</html>

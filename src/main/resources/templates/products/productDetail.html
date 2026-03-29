@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>商品詳細</title>
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+</head>
+<body class="main-container">
+<h1>商品詳細</h1>
+<table th:object="${product}">
+    <tr>
+        <th>商品名</th>
+    <td th:text="*{name}"></td>
+    </tr>
+    <tr>
+        <th>価格</th>
+    <td th:text="*{price}"></td>
+    </tr>
+    <tr>
+        <th>販売者</th>
+    <td th:text="${product.getUserName()}"></td>
+    </tr>
+    <tr>
+        <th>在庫数</th>
+    <td th:text="*{stock}"></td>
+    </tr>
+    <tr>
+        <th>商品画像</th>
+    <td><img th:src="*{Uri}" alt="画像が登録されていません" ></td>
+    </tr>
+</table>
+<form th:action="@{/order/add}" method="post">
+    <input type="hidden" name="id" th:value="${product.id}">
+    <table>
+        <tr>
+            <th>購入数</th>
+            <td><select th:if="${product.stock > 0}" name="quantity" id="quantity">
+            <option th:each="i : ${#numbers.sequence(1,product.stock)}" th:value="${i}" th:text="${i}"></option>
+            </select>
+                <span th:if="${product.stock==0}">在庫なし</span>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="カートに入れる" th:if="${product.stock > 0}">
+</form>
+<button onclick="history.back();">戻る</button>
+</body>
+</html>

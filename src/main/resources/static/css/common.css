@@ -1,0 +1,31 @@
+body{
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-family: 'Helvetica Neue',Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    line-height:1.6;
+    margin: 0;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auth;
+    background: #ffffff;
+    padding: 30px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+table {
+    width:100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+    text-align: left;
+}
+
+

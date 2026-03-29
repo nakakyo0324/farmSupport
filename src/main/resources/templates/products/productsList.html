@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>商品一覧画面</title>
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+</head>
+<body class="main-container">
+<h1>商品一覧</h1>
+<div th:if="${productsDataList == null}" th:text="${errorMessage}"></div>
+<div th:each="product : ${productsDataList}">
+    <a th:href="@{/products/detail(productId=${product.id})}"><div th:text="${product.name}"></div></a>
+
+</div>
+</body>
+</html>
