@@ -10,7 +10,7 @@
 <div th:if="${productsDataList == null}" th:text="${errorMessage}"></div>
 <div th:each="product : ${productsDataList}">
     <a th:href="@{/products/detail(productId=${product.id})}"><div th:text="${product.name}"></div></a>
-
 </div>
+<button onclick="location.href='/'">戻る</button>
 </body>
 </html>

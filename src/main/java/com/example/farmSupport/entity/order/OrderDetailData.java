@@ -29,6 +29,11 @@ public class OrderDetailData {
 
     @Getter
     @Setter
+    @Column(name="piece")
+    private Long piece;
+
+    @Getter
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private ProductsData productsData;

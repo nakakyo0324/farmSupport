@@ -2,12 +2,14 @@ package com.example.farmSupport.controller.order;
 
 import com.example.farmSupport.entity.order.CartData;
 import com.example.farmSupport.entity.order.OrderData;
+import com.example.farmSupport.entity.order.OrderDetailData;
 import com.example.farmSupport.entity.products.ProductsData;
 import com.example.farmSupport.entity.user.UserData;
 import com.example.farmSupport.service.order.OrderService;
 import com.example.farmSupport.service.products.ProductsService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.server.PathParam;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,9 +119,28 @@ public class OrderController {
             return "order/failed";
         }
 
+        List<OrderDetailData> orderDetailDataList = orderService.getOrderDetailDataList(orderData.getId(),principal);
+
         model.addAttribute("order",orderData);
+        model.addAttribute("orderDetailList",orderDetailDataList);
+        session.setAttribute("cart",new ArrayList<>());
 
         return "order/success";
+    }
+    @GetMapping("/order/List")
+    public String orderList(Model model,Principal principal) throws Exception {
+        List<OrderData> orderDataList = orderService.getOrderDataList(principal);
+        model.addAttribute("orderDataList",orderDataList);
+        return "order/orderList";
+    }
+
+    @GetMapping("/order/detail")
+    public String orderDetail(Model model, Principal principal, @PathParam("orderId") Long orderId) throws Exception {
+        List<OrderDetailData> orderDetailDataList = orderService.getOrderDetailDataList(orderId,principal);
+        model.addAttribute("orderDetailDataList",orderDetailDataList);
+
+        return "order/orderDetail";
+
     }
 
     public static class CartProduct extends ProductsData{

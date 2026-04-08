@@ -13,4 +13,6 @@ import java.util.List;
 public interface OrderRepository  extends JpaRepository<OrderData, Long> {
     List<OrderDetailData> findByUserData(UserData userData);
 
+    List<OrderData> findOrderListByUserData(UserData userData);
+
 }

@@ -15,6 +15,17 @@
     <form th:action="@{/login}" method="get">
         <input type="submit" value="ログイン" />
     </form>
+    <form th:action="@{/signup}" method="get">
+        <input type="submit" value="サインアップする" />
+    </form>
+</div>
+<a href="/products/List">商品一覧</a>
+<div sec:authorize="isAuthenticated() and authentication.name != 'anonymousUser'">
+    <a href="/order/confirm">カートを確認する</a><br>
+    <a href="/order/List">注文履歴を見る</a><br>
+    <div sec:authorize="hasRole('ADMIN')">
+        <a href="/products/regist">商品を登録する</a>
+    </div>
 </div>
 </body>
 </html>

@@ -18,6 +18,7 @@ import java.security.Principal;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.LongStream;
@@ -57,10 +58,36 @@ public class OrderService {
             OrderDetailData detail = new OrderDetailData();
             detail.setOrderData(saveOrder);
             detail.setProductsData(productsData);
+            detail.setPiece((long) cartData.getQuantity());
             detail.setPrice((long) productsData.getPrice());
 
             orderDetailRepository.save(detail);
         }
         return saveOrder;
+    }
+
+    public List<OrderData> getOrderDataList(Principal principal) throws Exception {
+        String userName = principal.getName();
+        UserData userData = userRepository.findByUsername(userName).orElseThrow(() -> new Exception("Not Found User"));
+
+        List<OrderData> orderDataList = orderRepository.findOrderListByUserData(userData);
+        System.out.println(orderDataList.size());
+        return orderDataList;
+    }
+
+    public List<OrderDetailData> getOrderDetailDataList(Long orderId,Principal principal) throws Exception {
+        String userName = principal.getName();
+        UserData userData = userRepository.findByUsername(userName).orElseThrow(() -> new Exception("Not Found User"));
+
+        OrderData orderData = orderRepository.findById(orderId).orElseThrow(() -> new Exception("Not Found User"));
+
+        if(orderData.getUserData().getId() != userData.getId()){
+            throw new Exception("User ");
+        }
+
+        List<OrderDetailData> orderDetailDataList = orderDetailRepository.findByOrderData(orderData);
+
+        System.out.println(orderDetailDataList.size());
+        return orderDetailDataList;
     }
 }

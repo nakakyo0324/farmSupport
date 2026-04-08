@@ -7,5 +7,11 @@
 <body>
 <h1>注文が確定しました</h1>
 <p th:text="${order.id}"></p>
+<div th:each="orderDetail : ${orderDetailList}"  th:object="${orderDetail}">
+    <div th:text="*{getProductName}"></div>
+    <div th:text="*{price}"></div>
+    <div th:text="*{piece}"></div>
+</div>
+<a href="/">topへ戻る</a>
 </body>
 </html>

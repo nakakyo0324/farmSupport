@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>商品詳細</title>
@@ -29,6 +29,7 @@
     <td><img th:src="*{Uri}" alt="画像が登録されていません" ></td>
     </tr>
 </table>
+<div sec:authorize="!isAuthenticated() or authentication.name != 'anonymousUser'">
 <form th:action="@{/order/add}" method="post">
     <input type="hidden" name="id" th:value="${product.id}">
     <table>
@@ -43,6 +44,7 @@
     </table>
     <input type="submit" value="カートに入れる" th:if="${product.stock > 0}">
 </form>
-<button onclick="history.back();">戻る</button>
+</div>
+<button onclick="location.href='/products/List'">戻る</button>
 </body>
 </html>

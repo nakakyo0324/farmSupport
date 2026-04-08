@@ -1,17 +1,21 @@
 package com.example.farmSupport.controller.products;
 
 import com.example.farmSupport.entity.products.ProductsData;
+import com.example.farmSupport.form.products.ProductForm;
 import com.example.farmSupport.service.products.ProductsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/products/")
 public class ProductsController {
@@ -34,7 +38,7 @@ public class ProductsController {
     }
 
     @GetMapping("detail")
-    public String product(@RequestParam() String productId,Model model)throws Exception{
+    public String productDetail(@RequestParam() String productId,Model model)throws Exception{
         if(productId == null){
             return "redirect:/products/List";
         }
@@ -44,5 +48,32 @@ public class ProductsController {
         }
         model.addAttribute("product",productsData);
         return "products/productDetail";
+    }
+
+    @GetMapping("regist")
+    public String productRegist(Model model){
+
+        ProductForm productForm = new ProductForm();
+
+        model.addAttribute("productForm",productForm);
+        return "products/regist";
+    }
+
+
+    @PostMapping("registComplete")
+    public String productRegistComplete(@Validated @ModelAttribute ProductForm productForm, BindingResult bindingResult, Principal principal, Model model){
+        if (bindingResult.hasErrors()) {
+            return "products/regist";
+        }
+        ProductsData productsData = new ProductsData();
+        try{
+             productsData = productsService.regist(productForm,principal);
+        }catch (Exception e){
+            model.addAttribute("ErrorMessage","登録時にエラーが発生しました。");
+            model.addAttribute("productForm",productForm);
+            return "products/regist";
+        }
+
+        return "redirect:/products/detail?productId="+ productsData.getId();
     }
 }

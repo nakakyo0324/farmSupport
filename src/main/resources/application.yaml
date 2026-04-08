@@ -6,7 +6,7 @@ spring:
     suffix: .html
     cache: false
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521/FREEPDB1
+    url: jdbc:oracle:thin:@localhost:1521/FREE
     username: SYSTEM
     password: farm1234
     driver-class-name: oracle.jdbc.OracleDriver

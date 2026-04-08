@@ -46,6 +46,4 @@ public class ProductsData {
         return (userData != null) ? userData.getUsername():"取得できませんでした。";
     }
 
-
-
 }
